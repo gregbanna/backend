@@ -1,0 +1,10 @@
+[build]
+  publish = "."
+  command = ""
+
+# Proxy all /api/* to Railway backend
+[[redirects]]
+  from = "/api/*"
+  to = "https://YOUR-RAILWAY-APP.up.railway.app/api/:splat"
+  status = 200
+  force = true

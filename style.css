@@ -1,0 +1,100 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Courier New', monospace;
+    background: #0a0a0a;
+    color: #00ff41;
+    line-height: 1.6;
+}
+
+header {
+    text-align: center;
+    padding: 2rem;
+    background: linear-gradient(45deg, #000, #001100);
+    border-bottom: 2px solid #00ff41;
+}
+
+header h1 { font-size: 2.5rem; margin-bottom: 0.5rem; }
+header p { font-size: 1.1rem; opacity: 0.8; }
+
+main {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.tool-card {
+    background: #1a1a1a;
+    padding: 1.5rem;
+    border: 1px solid #00ff41;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.1);
+}
+
+.tool-card h2 {
+    color: #00ff41;
+    margin-bottom: 1rem;
+    font-size: 1.3rem;
+}
+
+input {
+    width: 100%;
+    padding: 0.8rem;
+    background: #000;
+    border: 1px solid #00ff41;
+    color: #00ff41;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+}
+
+button {
+    width: 100%;
+    padding: 0.8rem;
+    background: #00ff41;
+    color: #000;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.3s;
+}
+
+button:hover { background: #00cc33; }
+
+#personResults, #usernameResults, #emailResults, #domainResults {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #000;
+    border: 1px solid #333;
+    border-radius: 4px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.result-item {
+    padding: 0.5rem;
+    border-bottom: 1px solid #333;
+    word-break: break-all;
+}
+
+.result-item:last-child { border-bottom: none; }
+
+footer {
+    text-align: center;
+    padding: 2rem;
+    background: #000;
+    border-top: 2px solid #00ff41;
+    margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+    main { grid-template-columns: 1fr; }
+    header h1 { font-size: 2rem; }
+}

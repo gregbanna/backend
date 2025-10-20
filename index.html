@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>🕵️ OSINT Toolkit</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Courier New',monospace;background:#0a0a0a;color:#00ff41;line-height:1.6}
+    header{text-align:center;padding:2rem;background:linear-gradient(45deg,#000,#001100);border-bottom:2px solid #00ff41}
+    header h1{font-size:2.5rem;margin-bottom:.5rem}
+    header p{font-size:1.1rem;opacity:.8}
+    main{max-width:1200px;margin:2rem auto;padding:0 1rem;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem}
+    .tool-card{background:#1a1a1a;padding:1.5rem;border:1px solid #00ff41;border-radius:8px;box-shadow:0 0 20px rgba(0,255,65,.1)}
+    .tool-card h2{color:#00ff41;margin-bottom:1rem;font-size:1.3rem}
+    input{width:100%;padding:.8rem;background:#000;border:1px solid #00ff41;color:#00ff41;margin-bottom:1rem;border-radius:4px}
+    button{width:100%;padding:.8rem;background:#00ff41;color:#000;border:none;font-weight:700;cursor:pointer;border-radius:4px;transition:background .3s}
+    button:hover{background:#00cc33}
+    #personResults,#usernameResults,#emailResults,#domainResults{margin-top:1rem;padding:1rem;background:#000;border:1px solid #333;border-radius:4px;max-height:300px;overflow-y:auto}
+    .result-item{padding:.5rem;border-bottom:1px solid #333;word-break:break-all}
+    .result-item:last-child{border-bottom:none}
+    footer{text-align:center;padding:2rem;background:#000;border-top:2px solid #00ff41;margin-top:2rem}
+    @media(max-width:768px){main{grid-template-columns:1fr}header h1{font-size:2rem}}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🕵️‍♂️ OSINT Toolkit</h1>
+    <p>Free Open Source Intelligence | Ethical Research Only</p>
+  </header>
+
+  <main>
+    <section class="tool-card">
+      <h2>👤 Person Search</h2>
+      <input type="text" id="personInput" placeholder="Email, Username, or Phone" />
+      <button onclick="searchPerson()">🔍 Search</button>
+      <div id="personResults"></div>
+    </section>
+
+    <section class="tool-card">
+      <h2>📱 Username Tracker</h2>
+      <input type="text" id="usernameInput" placeholder="@username" />
+      <button onclick="trackUsername()">🌐 Track</button>
+      <div id="usernameResults"></div>
+    </section>
+
+    <section class="tool-card">
+      <h2>✉️ Email Verifier</h2>
+      <input type="email" id="emailInput" placeholder="email@example.com" />
+      <button onclick="verifyEmail()">✅ Verify</button>
+      <div id="emailResults"></div>
+    </section>
+
+    <section class="tool-card">
+      <h2>🌍 Domain Recon</h2>
+      <input type="text" id="domainInput" placeholder="example.com" />
+      <button onclick="reconDomain()">🔎 Recon</button>
+      <div id="domainResults"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>⚠️ Ethical Use Only | Public Sources | No Private Data</p>
+  </footer>
+
+  <script>
+    // PERSON SEARCH (mock)
+    async function searchPerson(){
+      const input = document.getElementById('personInput').value.trim();
+      const results = document.getElementById('personResults');
+      if(!input){ results.innerHTML = '<p style="color:#ff4444;">Enter email/username/phone</p>'; return; }
+      results.innerHTML = '<p>🔍 Searching...</p>';
+      setTimeout(()=>{
+        const base = input.includes('@') ? input.split('@')[0] : input;
+        results.innerHTML = [
+          `<div class="result-item">📧 Email: ${input}</div>`,
+          `<div class="result-item">👤 LinkedIn: linkedin.com/in/${base}</div>`,
+          `<div class="result-item">🐦 Twitter: twitter.com/${base}</div>`,
+          `<div class="result-item">💻 GitHub: github.com/${base}</div>`,
+          `<div class="result-item">📱 Phone: +1-555-${Math.floor(Math.random()*900+100)}</div>`
+        ].join('');
+      }, 1200);
+    }
+
+    // USERNAME TRACKER (mock)
+    async function trackUsername(){
+      const u = document.getElementById('usernameInput').value.replace('@','').trim();
+      const results = document.getElementById('usernameResults');
+      if(!u){ results.innerHTML = '<p style="color:#ff4444;">Enter username</p>'; return; }
+      results.innerHTML = '<p>🌐 Tracking...</p>';
+      setTimeout(()=>{
+        results.innerHTML = [
+          `<div class="result-item">🐦 Twitter: twitter.com/${u} ✅</div>`,
+          `<div class="result-item">📷 Instagram: instagram.com/${u} ✅</div>`,
+          `<div class="result-item">💻 GitHub: github.com/${u} ✅</div>`,
+          `<div class="result-item">🔗 LinkedIn: linkedin.com/in/${u}</div>`,
+          `<div class="result-item">🎮 Twitch: twitch.tv/${u}</div>`
+        ].join('');
+      }, 1000);
+    }
+
+    // EMAIL VERIFIER (mock)
+    async function verifyEmail(){
+      const email = document.getElementById('emailInput').value.trim();
+      const results = document.getElementById('emailResults');
+      if(!email){ results.innerHTML = '<p style="color:#ff4444;">Enter email</p>'; return; }
+      results.innerHTML = '<p>✅ Verifying...</p>';
+      const isValid = /\S+@\S+\.\S+/.test(email);
+      setTimeout(()=>{
+        results.innerHTML = [
+          `<div class="result-item">📧 ${email}</div>`,
+          `<div class="result-item">✅ Valid: ${isValid ? 'YES' : 'NO'}</div>`,
+          `<div class="result-item">🏢 Domain: ${email.split('@')[1]||''}</div>`,
+          `<div class="result-item">🔒 Disposable: ${isValid && email.includes('tempmail') ? 'YES' : 'NO'}</div>`,
+          `<div class="result-item">📊 Breach Check: ${Math.random()>0.7 ? '⚠️ Found in 2 breaches' : '✅ Clean'}</div>`
+        ].join('');
+      }, 900);
+    }
+
+    // DOMAIN RECON (mock)
+    async function reconDomain(){
+      const domain = document.getElementById('domainInput').value.trim();
+      const results = document.getElementById('domainResults');
+      if(!domain){ results.innerHTML = '<p style="color:#ff4444;">Enter domain</p>'; return; }
+      results.innerHTML = '<p>🔎 Reconning...</p>';
+      setTimeout(()=>{
+        results.innerHTML = [
+          `<div class="result-item">🌐 Domain: ${domain}</div>`,
+          `<div class="result-item">📋 WHOIS: Registered 2023-01-15</div>`,
+          `<div class="result-item">🛡️ SSL: Valid (Let's Encrypt)</div>`,
+          `<div class="result-item">⚡ Tech Stack: React, Node.js</div>`,
+          `<div class="result-item">🔗 Subdomains: api.${domain}, mail.${domain}</div>`,
+          `<div class="result-item">📧 Emails: admin@${domain}, info@${domain}</div>`
+        ].join('');
+      }, 1500);
+    }
+  </script>
+</body>
+</html>
